@@ -109,7 +109,6 @@ export const PanelActions: React.FC<PanelActionsProps> = ({
     return undefined;
   }, [descriptionTooltipId, description]);
 
-  const linksAction = links && links.length > 0 && <LinksDisplay links={links} variant="panel" />;
   const extraActions = editHandlers === undefined && extra;
 
   const queryStateIndicator = useMemo((): ReactNode | undefined => {
@@ -271,7 +270,8 @@ export const PanelActions: React.FC<PanelActionsProps> = ({
         {divider}
         <OnHover>
           <OverflowMenu title={title}>
-            {descriptionAction} {linksAction} {queryStateIndicator} {noticesIndicator} {extraActions} {viewQueryAction}
+            {descriptionAction} {links && links.length > 0 && <LinksDisplay links={links} variant="panel" />}{' '}
+            {queryStateIndicator} {noticesIndicator} {extraActions} {viewQueryAction}
             {readActions} {pluginActions} {itemActions}
             {editActions}
           </OverflowMenu>
@@ -288,7 +288,7 @@ export const PanelActions: React.FC<PanelActionsProps> = ({
         })}
       >
         <OnHover>
-          {descriptionAction} {linksAction}
+          {descriptionAction} {links && links.length > 0 && <LinksDisplay links={links} variant="panel" />}
         </OnHover>
         {divider} {queryStateIndicator}
         {noticesIndicator}
@@ -311,7 +311,7 @@ export const PanelActions: React.FC<PanelActionsProps> = ({
         })}
       >
         <OnHover>
-          {descriptionAction} {linksAction}
+          {descriptionAction} {links && links.length > 0 && <LinksDisplay links={links} variant="panel" />}
         </OnHover>
         {divider} {queryStateIndicator}
         {noticesIndicator}

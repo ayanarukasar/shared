@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { IconButton, Link as LinkComponent, Menu, MenuItem, Theme, Chip, capitalize, Stack } from '@mui/material';
+import { Box, IconButton, Link as LinkComponent, Menu, MenuItem, Theme, Chip, capitalize, Stack } from '@mui/material';
 import LaunchIcon from 'mdi-material-ui/Launch';
 import { Link } from '@perses-dev/spec';
 import { MouseEvent, ReactElement, useState } from 'react';
@@ -75,7 +75,7 @@ export function LinksDisplay({ links, variant }: LinksProps): ReactElement | nul
 
   // Default: show dropdown menu for multiple links
   return (
-    <>
+    <Box sx={{ display: 'inline-flex' }}>
       <InfoTooltip description={`${links.length} links`} enterDelay={100}>
         <IconButton
           aria-label={`${capitalize(variant)}-links`}
@@ -96,6 +96,11 @@ export function LinksDisplay({ links, variant }: LinksProps): ReactElement | nul
         anchorEl={anchorEl}
         open={isMenuOpened}
         onClose={handleClose}
+        // Panel links live inside react-grid-layout items that use CSS transforms.
+        // Portaling the menu to the document body causes incorrect positioning.
+        disablePortal={variant === 'panel'}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         MenuListProps={{
           'aria-labelledby': `${variant}-links-button`,
         }}
@@ -104,7 +109,7 @@ export function LinksDisplay({ links, variant }: LinksProps): ReactElement | nul
           <LinkMenuItem key={link.url} link={link} />
         ))}
       </Menu>
-    </>
+    </Box>
   );
 }
 
